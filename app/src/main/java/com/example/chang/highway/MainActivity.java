@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 import static com.example.chang.highway.R.layout.activity_main;
 
@@ -30,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onCreate(savedInstanceState);
             //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-            //Bmob.initialize(this, "d82d140b8ea7e0688c75b0109054f848");
+            Bmob.initialize(this, "d82d140b8ea7e0688c75b0109054f848");
 
             setContentView(activity_main);
 
@@ -39,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         //UI组件初始化与事件绑定
+
         private void bindView() {
             topBar = (TextView)this.findViewById(R.id.txt_top);
             tabHome = (TextView)this.findViewById(R.id.txt_home);
