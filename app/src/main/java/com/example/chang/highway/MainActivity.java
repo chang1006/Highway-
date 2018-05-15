@@ -1,10 +1,14 @@
 package com.example.chang.highway;
 
+import android.app.Fragment;
+//import android.support.v4.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,7 +17,9 @@ import cn.bmob.v3.Bmob;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
+import static com.example.chang.highway.R.id.fragment_container;
 import static com.example.chang.highway.R.layout.activity_main;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
         private TextView topBar;
@@ -21,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         private TextView tabOrder;
         private TextView tabUser;
         private TextView tabService;
+        private Fragment menua;
 
         private FrameLayout ly_content;
 
@@ -40,18 +47,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setContentView(activity_main);
 
             bindView();
+            int id = getIntent().getIntExtra("id", 0);
+            if (id == 1) {
+                Fragment ff1 = new FirstFragment();
+                getFragmentManager()
+                    .beginTransaction()
+                        .replace(fragment_container,ff1)
+                        .addToBackStack(null)
+                        .commit();
+            }
 
+            // Intent intent0 = getIntent();
+            //获取传递的值
+            //String str = intent.getStringExtra("data");
+            //设置值
+            //tv = (TextView)this.findViewById(R.id.startsearch);
+           // tv.setText(str);
         }
 
         //UI组件初始化与事件绑定
 
         private void bindView() {
-            topBar = (TextView)this.findViewById(R.id.txt_top);
+            //topBar = (TextView)this.findViewById(R.id.txt_top);
             tabHome = (TextView)this.findViewById(R.id.txt_home);
             tabOrder = (TextView)this.findViewById(R.id.txt_order);
             tabService = (TextView)this.findViewById(R.id.txt_service);
             tabUser = (TextView)this.findViewById(R.id.txt_user);
-            ly_content = (FrameLayout) this.findViewById(R.id.fragment_container);
+            ly_content = (FrameLayout) this.findViewById(fragment_container);
 
             tabHome.setOnClickListener(this);
             tabUser.setOnClickListener(this);
@@ -68,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tabService.setSelected(false);
         }
 
-        //     隐藏所有Fragment
+        // 隐藏所有Fragment
         public void hideAllFragment(FragmentTransaction transaction){
             if(f1!=null){
                 transaction.hide(f1);
@@ -93,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     selected();
                     tabHome.setSelected(true);
                     if(f1==null){
-                        f1 = new FirstFragment("第一个Fragment");
-                        transaction.add(R.id.fragment_container,f1);
+                        f1 = new FirstFragment();
+                        transaction.add(fragment_container,f1);
                     }else{
                         transaction.show(f1);
                     }
@@ -104,8 +126,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     selected();
                     tabOrder.setSelected(true);
                     if(f2==null){
-                        f2 = new FirstFragment("第二个Fragment");
-                        transaction.add(R.id.fragment_container,f2);
+                        f2 = new FirstFragment();
+                        transaction.add(fragment_container,f2);
                     }else{
                         transaction.show(f2);
                     }
@@ -115,8 +137,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     selected();
                     tabService.setSelected(true);
                     if(f3==null){
-                        f3 = new FirstFragment("第三Fragment");
-                        transaction.add(R.id.fragment_container,f3);
+                        f3 = new FirstFragment();
+                        transaction.add(fragment_container,f3);
                     }else{
                         transaction.show(f3);
                     }
@@ -127,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     tabUser.setSelected(true);
                     if(f4==null){
                         f4 = new FourthFragment();
-                        transaction.add(R.id.fragment_container,f4);
+                        transaction.add(fragment_container,f4);
                     }else{
                         transaction.show(f4);
                     }

@@ -45,12 +45,22 @@
         </activity>
 
         <activity
+            android:name=".StartSearch">
+        </activity>
+
+
+
+        <activity
             android:name="com.example.register.Login">
 
             <intent-filter>
-                <action android:name="com.example.chang.highway.ACTION_START" />
+                <action android:name="com.example.register.ACTION_START" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.example.register.Signin">
         </activity>
     </application>
 

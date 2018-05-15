@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="444"
+        android:text="44444"
         android:textSize="20sp"/>
 
     <Button
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Button" />
+        android:text="注册/登录" />
 
 </LinearLayout>
 
