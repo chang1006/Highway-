@@ -12,8 +12,10 @@ import android.widget.Toast;
 
 import com.example.chang.highway.FourthFragment;
 import com.example.chang.highway.MainActivity;
+import com.example.chang.highway.MyApplication;
 import com.example.chang.highway.MyUser;
 import com.example.chang.highway.R;
+import com.example.chang.highway.StartSearch;
 
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class Login extends AppCompatActivity{
     private EditText password;
     private Button button;
     private TextView textView;
+    private MyApplication myApp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,9 +86,17 @@ public class Login extends AppCompatActivity{
                             if(gname.equals(name)&&gpassword.equals(pass))
                             {
                                 //Toast.makeText(Login.this, "登陆成功", Toast.LENGTH_LONG).show();
-                                Intent seccess = new Intent();
-                                seccess.setClass(Login.this, MainActivity.class);
-                                startActivity(seccess);
+//                                Intent seccess = new Intent();
+//                                seccess.setClass(Login.this, MainActivity.class);
+//                                startActivity(seccess);
+                                String str = username.getText().toString();
+                                myApp = (MyApplication) getApplicationContext();
+                                myApp.setAppuser(str);
+
+                                Intent log = new Intent(Login.this, MainActivity.class);
+                                log.putExtra("logid",1);
+                                startActivity(log);
+
                              }
 
                              }

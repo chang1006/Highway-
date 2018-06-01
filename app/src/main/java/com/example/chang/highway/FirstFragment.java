@@ -22,6 +22,8 @@ import com.example.register.Signin;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import static cn.bmob.v3.Bmob.getApplicationContext;
+
 /**
  * Created by chang on 2018/3/6.
  */
@@ -32,8 +34,10 @@ public class FirstFragment extends Fragment {
     private TextView mTextView;
     private Button start;
     private Button end;
-    private Button btn;
+    private Button time;
+    private Button order;
     private int year, month, day;
+    private MyApplication myApp;
 
 //    public  FirstFragment(String context){
 //        this.context = context;
@@ -45,24 +49,16 @@ public class FirstFragment extends Fragment {
         View view = inflater.inflate(R.layout.first_fragment, container, false);
         start = (Button) view.findViewById(R.id.start);
         end = (Button) view.findViewById(R.id.end);
-        btn = (Button) view.findViewById(R.id.btn);
+        time = (Button) view.findViewById(R.id.btn);
+        order = (Button)view.findViewById(R.id.order);
 
- //       Bundle bundle = getArguments();//从activity传过来的Bundle
-//        if(bundle!=null){
-//            mArgument = bundle.getString(ID);
-//            //start.setText(bundle.getString(ID));
-//        }
-//        public static FirstFragment newInstance(String idd)
-//        {
-//            Bundle bundle = new Bundle();
-//            bundle.putString(ID, idd);
-//            FirstFragment contentFragment = new FirstFragment();
-//            contentFragment.setArguments(bundle);
-//            return contentFragment;
-//        }
+        myApp = (MyApplication)getApplicationContext();
+        start.setText(myApp.getAppstart());
+        end.setText(myApp.getAppend());
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  HH-mm-ss");
         String date = dateFormat.format(new java.util.Date());
+
 
         start.setOnClickListener(new View.OnClickListener() {
 
@@ -70,12 +66,32 @@ public class FirstFragment extends Fragment {
             public void onClick(View arg0) {
                 Intent intent = new Intent(getActivity(), StartSearch.class);
                 //intent.putExtra("starttext",1);
-                //startActivity(intent);
-                startActivityForResult(intent,1);
+                startActivity(intent);
+                //startActivityForResult(intent,1);
+            }
+        });
+        end.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                Intent intent2 = new Intent(getActivity(), EndSearch.class);
+                //intent.putExtra("starttext",1);
+                startActivity(intent2);
+                //startActivityForResult(intent,2);
+            }
+        });
+        order.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                String str = time.getText().toString();
+                myApp.setApptime(str);
+                Intent intent3 = new Intent(getActivity(), Order.class);
+                startActivity(intent3);
             }
         });
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 date();
@@ -93,7 +109,7 @@ public class FirstFragment extends Fragment {
                 @Override
                 public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                     String date = String.format("%d-%d-%d", year, monthOfYear, dayOfMonth);
-                    btn.setText(date);
+                    time.setText(date);
                 }
             }, year, month, day).show();
         }

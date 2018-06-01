@@ -32,13 +32,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         private FrameLayout ly_content;
 
         private FirstFragment f1,f2,f3;
+        private FirstFragment ff1;
+        private FourthFragment f14;
+        private FourthFragment f24;
         //private FirstFragment f2;
         //private FirstFragment f3;
         private FourthFragment f4;
         private FragmentManager fragmentManager;
 
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
+        protected void onCreate(Bundle savedInstanceState)
+        {
             super.onCreate(savedInstanceState);
             //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -48,11 +52,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             bindView();
             int id = getIntent().getIntExtra("id", 0);
-            if (id == 1) {
-                Fragment ff1 = new FirstFragment();
+            if (id == 1||id == 2) {
+                ff1 = new FirstFragment();
                 getFragmentManager()
                     .beginTransaction()
                         .replace(fragment_container,ff1)
+                        .addToBackStack(null)
+                        .commit();
+            }
+            int logid = getIntent().getIntExtra("logid", 0);
+            if (logid == 1) {
+                f14 = new FourthFragment();
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(fragment_container,f14)
+                        .addToBackStack(null)
+                        .commit();
+            }
+            int licenseid = getIntent().getIntExtra("licenseid", 0);
+            if (licenseid == 1) {
+                f24 = new FourthFragment();
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(fragment_container,f24)
                         .addToBackStack(null)
                         .commit();
             }
@@ -92,6 +114,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // 隐藏所有Fragment
         public void hideAllFragment(FragmentTransaction transaction){
+            if(ff1!=null){
+                transaction.hide(ff1);
+            }
+            if(f14!=null){
+                transaction.hide(f14);
+            }
+            if(f24!=null){
+                transaction.hide(f24);
+            }
             if(f1!=null){
                 transaction.hide(f1);
             }
@@ -147,13 +178,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case R.id.txt_user:
                     selected();
                     tabUser.setSelected(true);
-                    if(f4==null){
-                        f4 = new FourthFragment();
-                        transaction.add(fragment_container,f4);
-                    }else{
-                        transaction.show(f4);
-                    }
+                    f4 = new FourthFragment();
+                    transaction.add(fragment_container,f4);
                     break;
+//                    if(f4==null){
+//                        f4 = new FourthFragment();
+//                        transaction.add(fragment_container,f4);
+//                    }else{
+//                        transaction.show(f4);
+//                    }
+//                    break;
             }
 
             transaction.commit();
