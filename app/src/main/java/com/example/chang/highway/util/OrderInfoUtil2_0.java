@@ -60,13 +60,13 @@ public class OrderInfoUtil2_0 {
 		return keyValues;
 	}
 
-	/**
-	 * 构造支付订单参数列表
-	 * @param pid
-	 * @param app_id
-	 * @param target_id
-	 * @return
-	 */
+//	/**
+//	 * 构造支付订单参数列表
+//	 * @param pid
+//	 * @param app_id
+//	 * @param target_id
+//	 * @return
+//	 */
 	public static Map<String, String> buildOrderParamMap(String app_id, boolean rsa2) {
 		Map<String, String> keyValues = new HashMap<String, String>();
 
