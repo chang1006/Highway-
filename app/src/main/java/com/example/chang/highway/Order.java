@@ -27,6 +27,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+
 import static cn.bmob.v3.Bmob.getApplicationContext;
 
 /**
@@ -39,7 +42,8 @@ public class Order extends AppCompatActivity {
     private TextView time;
     private TextView licence;
     private TextView type;
-    private TextView money;
+    public TextView money;
+    public static String smoney;
 
     private MyApplication myApp;
 
@@ -68,93 +72,67 @@ public class Order extends AppCompatActivity {
         String ends = end.getText().toString();
         String types = type.getText().toString();
 
-        if(starts=="沈阳西"){
-            double imoney = 0.35 * 8;
-            String smoney = String.valueOf(imoney);
-            money.setText(smoney);
+//        money.setText("2");
+//        if(starts.equals("沈阳西")){
+//            double imoney = 0.35 * 8;
+//            String smoney = String.valueOf(imoney);
+//            money.setText(smoney);
+//        }
+
+
+        if (starts.equals("沈阳西")) {
+            if (ends.equals("红旗台")) {
+                if(types.equals("≤7座")) {
+                    double imoney = 0.35 * 8;
+                    smoney = String.valueOf(imoney);
+                    money.setText(smoney);
+                }
+                else{
+                    double imoney = 0.8 * 8;
+                    smoney = String.valueOf(imoney);
+                    money.setText(smoney);
+                }
+            }
+            else if(ends.equals("陵园街")){
+                if(types.equals("≤7座")) {
+                    double imoney = 0.35 * 23;
+                    smoney = String.valueOf(imoney);
+                    money.setText(smoney);
+                }
+                else{
+                    double imoney = 0.8 * 23;
+                    smoney = String.valueOf(imoney);
+                    money.setText(smoney);
+                }
+            }
         }
-
-//        switch(starts) {
-//              case "沈阳西":
-//                  double imoney = 0.35 * 8;
-//                  String smoney = String.valueOf(imoney);
-//                  money.setText(smoney);
-//                  break;
-//        }
-
-
-
-//        double s_imoneyA1_2 = 0.35*8;
-//        double s_imoneyA1_3 = 0.35*8;
-//        String s_smoneyA1_2 = String.valueOf(s_imoneyA1_2);
-//        String s_smoneyA1_3 = String.valueOf(s_imoneyA1_3);
-//        switch(starts) {
-//            case "沈阳西":
-//                money.setText(s_smoneyA1_2);
-//                break;
-//                switch (ends){
-//                    case "红旗台":
-//                        money.setText(s_smoneyA1_3);
-//                        break;
-//                }
-//
-//            case "二十里铺":;
-//                money.setText(s_smoney1_3);
-//                break;
-//        }
-
-//        if (starts == "沈阳西") {
-//            if (ends == "红旗台") {
-//                if(types == "≤7座") {
-//                    double imoney = 0.35 * 8;
-//                    String smoney = String.valueOf(imoney);
-//                    money.setText(smoney);
-//                }
-//                else{
-//                    double imoney = 0.8 * 8;
-//                    String smoney = String.valueOf(imoney);
-//                    money.setText(smoney);
-//                }
-//            }
-//            else if(ends == "陵园街"){
-//                if(types == "≤7座") {
-//                    double imoney = 0.35 * 23;
-//                    String smoney = String.valueOf(imoney);
-//                    money.setText(smoney);
-//                }
-//                else{
-//                    double imoney = 0.8 * 23;
-//                    String smoney = String.valueOf(imoney);
-//                    money.setText(smoney);
-//                }
-//            }
-//        }
-//        else if(starts == "二十里铺"){
-//             if (ends == "沈阳西") {
-//                if(types == "≤7座") {
-//                    double imoney = 0.35 * 337;
-//                    String smoney = String.valueOf(imoney);
-//                    money.setText(smoney);
-//                }
-//                else{
-//                    double imoney = 0.8 * 337;
-//                    String smoney = String.valueOf(imoney);
-//                    money.setText(smoney);
-//                }
-//            }
-//            else if(ends == "陵园街"){
-//                if(types == "≤7座") {
-//                    double imoney = 0.35 * 23;
-//                    String smoney = String.valueOf(imoney);
-//                    money.setText(smoney);
-//                }
-//                else{
-//                    double imoney = 0.8 * 23;
-//                    String smoney = String.valueOf(imoney);
-//                    money.setText(smoney);
-//                }
-//            }
-//        }
+        else if(starts.equals("二十里铺")){
+             if (ends.equals("沈阳西")) {
+                if(types.equals("≤7座")) {
+                    double imoney = 0.35 * 337;
+                    smoney = String.valueOf(imoney);
+                    money.setText(smoney);
+                }
+                else{
+                    double imoney = 0.8 * 337;
+                    smoney = String.valueOf(imoney);
+                    money.setText(smoney);
+                }
+            }
+            else if(ends.equals("陵园街")){
+                if(types.equals("≤7座")) {
+                    double imoney = 0.35 * 23;
+                    smoney = String.valueOf(imoney);
+                    money.setText(smoney);
+                }
+                else{
+                    double imoney = 0.8 * 23;
+                    //String smoney = String.format("%.2f", imoney);
+                    smoney = String.valueOf(imoney);
+                    money.setText(smoney);
+                }
+            }
+        }
 
 
 
@@ -196,7 +174,23 @@ public class Order extends AppCompatActivity {
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        Toast.makeText(Order.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        myApp = (MyApplication)getApplicationContext();
+                        MyOrder orders = new MyOrder();
+                        orders.setUser(myApp.getAppuser());
+                        orders.setNumber(myApp.getAppnumber());
+                        orders.setStart(myApp.getAppstart());
+                        orders.setEnd(myApp.getAppend());
+                        orders.save(new SaveListener<String>() {
+                            @Override
+                            public void done(String s, BmobException e) {
+                                if (e == null) {
+                                    Toast.makeText(Order.this, "支付成功" , Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Order.this, "支付失败" , Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                        //Toast.makeText(Order.this, "支付成功", Toast.LENGTH_SHORT).show();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(Order.this, "支付失败", Toast.LENGTH_SHORT).show();

@@ -12,7 +12,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
+import com.example.chang.highway.MyApplication;
+import com.example.chang.highway.Order;
 import com.example.chang.highway.SignUtils;
+
+import static cn.bmob.v3.Bmob.getApplicationContext;
 
 public class OrderInfoUtil2_0 {
 	
@@ -24,6 +28,8 @@ public class OrderInfoUtil2_0 {
 	 * @param target_id
 	 * @return
 	 */
+
+
 	public static Map<String, String> buildAuthInfoMap(String pid, String app_id, String target_id, boolean rsa2) {
 		Map<String, String> keyValues = new HashMap<String, String>();
 
@@ -72,7 +78,7 @@ public class OrderInfoUtil2_0 {
 
 		keyValues.put("app_id", app_id);
 
-		keyValues.put("biz_content", "{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\"1\",\"subject\":\"1\",\"body\":\"我是测试数据\",\"out_trade_no\":\"" + getOutTradeNo() +  "\"}");
+		keyValues.put("biz_content", "{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\"" + getMoney() +  "\",\"subject\":\"1\",\"body\":\"我是测试数据\",\"out_trade_no\":\"" + getOutTradeNo() +  "\"}");
 		
 		keyValues.put("charset", "utf-8");
 
@@ -185,6 +191,11 @@ public class OrderInfoUtil2_0 {
 		key = key + r.nextInt();
 		key = key.substring(0, 15);
 		return key;
+	}
+
+	public static String getMoney() {
+		//Order order = new Order();
+		return Order.smoney;
 	}
 
 }

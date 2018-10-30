@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         private FrameLayout ly_content;
 
-        private FirstFragment f1,f2,f3;
+        private FirstFragment f1;
         private FirstFragment ff1;
         private FourthFragment f14;
         private FourthFragment f24;
-        //private FirstFragment f2;
-        //private FirstFragment f3;
+        private SecondFragment f2;
+        private ThirdFragment f3;
         private FourthFragment f4;
         private FragmentManager fragmentManager;
 
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     selected();
                     tabOrder.setSelected(true);
                     if(f2==null){
-                        f2 = new FirstFragment();
+                        f2 = new SecondFragment();
                         transaction.add(fragment_container,f2);
                     }else{
                         transaction.show(f2);
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     selected();
                     tabService.setSelected(true);
                     if(f3==null){
-                        f3 = new FirstFragment();
+                        f3 = new ThirdFragment();
                         transaction.add(fragment_container,f3);
                     }else{
                         transaction.show(f3);
